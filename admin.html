@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Harbourline WACC — Admin</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="common.js"></script>
+</head>
+<body>
+<header class="top">
+  <div><h1>Harbourline WACC — Admin</h1><div class="sub">Access requests and usage</div></div>
+  <div class="sp"></div>
+  <span id="who" class="sub"></span>
+  <a class="btn" href="index.html">Open the app</a>
+  <button id="signOut" class="hidden">Sign out</button>
+</header>
+<main>
+  <div id="auth"></div>
+  <div id="panel" class="hidden">
+    <div class="card"><h2>Access requests</h2><div id="out"></div><div class="tw"><table><thead><tr><th>Person</th><th>Company / purpose</th><th>Requested</th><th>Status</th><th></th></tr></thead><tbody id="reqs"></tbody></table></div></div>
+    <div class="card"><h2>Latest runs (all users)</h2><div class="tw"><table><thead><tr><th>Date</th><th>User</th><th>Project</th><th>Country</th><th class="n">E / D</th><th class="n">WACC</th><th>Status</th></tr></thead><tbody id="runs"></tbody></table></div></div>
+  </div>
+</main>
+<script>
+(function () {
+  const { sb, h, $, fmtDate, msg, renderAuth } = window.WACC;
+  async function boot() {
+    if (!sb) return renderAuth($("auth"), { adminOnly: true });
+    const { data } = await sb.auth.getSession();
+    if (!data.session) return renderAuth($("auth"), { adminOnly: true, onSignedIn: boot });
+    $("who").textContent = data.session.user.email; $("signOut").classList.remove("hidden");
+    const { data: isAdm } = await sb.rpc("is_admin");
+    if (!isAdm) return $("auth").replaceChildren(h("div", { class: "card auth" }, h("h2", {}, "Not authorised"), h("p", {}, "This account is not an administrator.")));
+    $("auth").replaceChildren(); $("panel").classList.remove("hidden");
+    load();
+  }
+  $("signOut").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+  async function decide(id, status) {
+    const { error } = await sb.from("access_requests").update({ status, decided_at: new Date().toISOString() }).eq("id", id);
+    msg($("out"), error ? "err" : "", error ? error.message : ""); load();
+  }
+  async function remove(id, email) {
+    if (!window.confirm("Delete the request of " + email + "? They will lose access.")) return;
+    const { error } = await sb.from("access_requests").delete().eq("id", id);
+    msg($("out"), error ? "err" : "", error ? error.message : ""); load();
+  }
+  async function load() {
+    const [{ data: reqs }, { data: runs }] = await Promise.all([
+      sb.from("access_requests").select("*").order("created_at", { ascending: false }),
+      sb.from("wacc_runs").select("id,created_at,email,status,inputs,result->headline").order("created_at", { ascending: false }).limit(100),
+    ]);
+    const order = { pending: 0, approved: 1, rejected: 2 };
+    $("reqs").replaceChildren(...(reqs || []).sort((a, b) => order[a.status] - order[b.status]).map((r) => h("tr", {},
+      h("td", {}, h("b", {}, r.full_name), h("span", { class: "note" }, r.email)),
+      h("td", {}, r.company || "", r.reason ? h("span", { class: "note" }, r.reason) : null),
+      h("td", {}, fmtDate(r.created_at)), h("td", {}, h("span", { class: "pill " + r.status }, r.status)),
+      h("td", { style: "white-space:nowrap" },
+        r.status !== "approved" ? h("button", { class: "ok", onclick: () => decide(r.id, "approved") }, "Approve") : null, " ",
+        r.status !== "rejected" ? h("button", { class: "no", onclick: () => decide(r.id, "rejected") }, r.status === "approved" ? "Revoke" : "Reject") : null, " ",
+        h("button", { class: "sec", onclick: () => remove(r.id, r.email) }, "Delete")))));
+    if (!reqs || !reqs.length) $("reqs").replaceChildren(h("tr", {}, h("td", { colspan: "5" }, "No requests yet.")));
+    $("runs").replaceChildren(...(runs || []).map((r) => h("tr", {},
+      h("td", {}, fmtDate(r.created_at)), h("td", {}, r.email), h("td", {}, r.inputs.project || "–"), h("td", {}, r.inputs.country.name),
+      h("td", { class: "n" }, r.inputs.equity_pct + " / " + r.inputs.debt_pct),
+      h("td", { class: "n" }, r.headline ? r.headline.wacc.toFixed(2) + "% " + r.headline.currency : "–"),
+      h("td", {}, h("span", { class: "pill " + r.status }, r.status)))));
+  }
+  boot();
+})();
+</script>
+</body>
+</html>

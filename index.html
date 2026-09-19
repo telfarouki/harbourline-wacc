@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Harbourline WACC</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="countries.js"></script>
+<script src="common.js"></script>
+</head>
+<body>
+<header class="top">
+  <div><h1>Harbourline WACC</h1><div class="sub">Sourced cost-of-capital estimates for infrastructure projects</div></div>
+  <div class="sp"></div>
+  <span id="who" class="sub"></span>
+  <a id="adminLink" class="btn hidden" href="admin.html">Admin</a>
+  <button id="signOut" class="hidden">Sign out</button>
+</header>
+<main>
+  <div id="auth"></div>
+
+  <div id="app" class="grid hidden">
+    <div id="formCol">
+      <div class="card">
+        <h2>New estimate</h2>
+        <label>Project name</label>
+        <input id="fProject" maxlength="120" placeholder="e.g. Banana deep-sea port, phase 2">
+        <label>Country</label>
+        <select id="fCountry"></select>
+        <label>Sector</label>
+        <select id="fSector">
+          <option value="ports">Ports &amp; container terminals</option>
+          <option value="logistics">Logistics, warehousing &amp; freight</option>
+          <option value="zones">Economic zones &amp; industrial parks</option>
+          <option value="marine">Marine services &amp; shipping</option>
+          <option value="rail">Rail &amp; inland corridors</option>
+        </select>
+        <div class="row2">
+          <div><label>Equity %</label><input id="fEq" type="number" min="10" max="100" step="1" value="40"></div>
+          <div><label>Debt %</label><input id="fDebt" type="number" min="0" max="90" step="1" value="60"></div>
+        </div>
+        <label>Currency of the WACC</label>
+        <select id="fCur"><option value="USD">USD (nominal)</option><option value="EUR">EUR (nominal)</option><option value="LOCAL">Local currency</option></select>
+        <label>Project description <small>(optional — helps the agent)</small></label>
+        <textarea id="fDesc" maxlength="1200" placeholder="Concession length, greenfield/brownfield, lenders approached, revenue currency…"></textarea>
+        <details>
+          <summary>Advanced overrides (leave empty to let the agent source everything)</summary>
+          <div class="row2">
+            <div><label>Tax rate %</label><input id="oTax" type="number" step="0.1"></div>
+            <div><label>Pre-tax cost of debt %</label><input id="oKd" type="number" step="0.01"></div>
+            <div><label>Unlevered beta</label><input id="oBeta" type="number" step="0.01"></div>
+            <div><label>Country risk premium %</label><input id="oCrp" type="number" step="0.01"></div>
+            <div><label>Risk-free rate %</label><input id="oRf" type="number" step="0.01"></div>
+            <div><label>CRP exposure λ <small>(default 1)</small></label><input id="oLambda" type="number" step="0.05" min="0" max="2"></div>
+          </div>
+        </details>
+        <div class="actions"><button id="run">Run the agent</button></div>
+        <div id="formMsg"></div>
+        <p class="foot">A run takes 1–2 minutes: data feeds first, then live web research, then the calculation.</p>
+      </div>
+      <div class="card">
+        <h2>My previous estimates</h2>
+        <ul id="hist" class="hist"></ul>
+      </div>
+    </div>
+    <div id="resCol">
+      <div id="result" class="card"><h2>Result</h2><p class="foot">Fill in the form and run the agent. The result shows the indicative WACC, the full calculation method and every reference used.</p></div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  const { sb, h, $, safeUrl, fmtDate, msg, renderAuth } = window.WACC;
+  let session = null, pollTimer = null;
+
+  // ---------- country select
+  const sel = $("fCountry");
+  for (const [group, list] of Object.entries(window.WACC_COUNTRIES)) {
+    const og = h("optgroup", { label: group });
+    for (const [iso3, name, cur, dm] of list) og.append(h("option", { value: iso3, "data-cur": cur, "data-dm": dm || "" }, name));
+    sel.append(og);
+  }
+  try { const last = localStorage.getItem("wacc.country"); if (last) sel.value = last; } catch {}
+  $("fEq").addEventListener("input", () => { const v = Math.min(100, Math.max(0, +$("fEq").value || 0)); $("fDebt").value = 100 - v; });
+  $("fDebt").addEventListener("input", () => { const v = Math.min(100, Math.max(0, +$("fDebt").value || 0)); $("fEq").value = 100 - v; });
+
+  // ---------- session
+  async function boot() {
+    if (!sb) return renderAuth($("auth"), {});
+    const { data } = await sb.auth.getSession();
+    session = data.session;
+    if (!session) { $("app").classList.add("hidden"); return renderAuth($("auth"), { onSignedIn: boot }); }
+    const [{ data: ok }, { data: isAdm }] = await Promise.all([sb.rpc("is_approved"), sb.rpc("is_admin")]);
+    $("who").textContent = session.user.email; $("signOut").classList.remove("hidden");
+    if (!ok) { $("auth").replaceChildren(h("div", { class: "card auth" }, h("h2", {}, "Awaiting approval"), h("p", {}, "Your account is not approved yet. You will get access as soon as the administrator validates your request."))); return; }
+    $("auth").replaceChildren(); $("app").classList.remove("hidden");
+    $("adminLink").classList.toggle("hidden", !isAdm);
+    loadHistory();
+  }
+  $("signOut").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+  // ---------- run
+  const numOrNull = (id) => { const v = $(id).value.trim(); return v === "" ? null : Number(v); };
+  $("run").onclick = async () => {
+    const opt = sel.selectedOptions[0];
+    const body = {
+      project: $("fProject").value.trim(), description: $("fDesc").value.trim(),
+      country: { iso3: opt.value, name: opt.textContent, damodaran: opt.dataset.dm || opt.textContent },
+      sector: $("fSector").value, equity_pct: +$("fEq").value, debt_pct: +$("fDebt").value,
+      currency: $("fCur").value, local_currency: opt.dataset.cur,
+      overrides: { tax_pct: numOrNull("oTax"), kd_pct: numOrNull("oKd"), beta_u: numOrNull("oBeta"), crp_pct: numOrNull("oCrp"), rf_pct: numOrNull("oRf"), lambda: numOrNull("oLambda") },
+    };
+    if (Math.abs(body.equity_pct + body.debt_pct - 100) > 0.01 || body.equity_pct < 10) return msg($("formMsg"), "err", "Equity and debt must add up to 100 %, with at least 10 % equity.");
+    try { localStorage.setItem("wacc.country", opt.value); } catch {}
+    msg($("formMsg"), "", ""); $("run").disabled = true;
+    try {
+      const { data: s } = await sb.auth.getSession();
+      const r = await fetch(window.WACC.config.SUPABASE_URL + "/functions/v1/" + (window.WACC.config.FUNCTION_NAME || "wacc"), {
+        method: "POST", body: JSON.stringify(body),
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + s.session.access_token, "apikey": window.WACC.config.SUPABASE_ANON_KEY },
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.run_id) throw new Error(j.error || j.message || ("The engine answered " + r.status));
+      watch(j.run_id, Date.now());
+    } catch (e) { msg($("formMsg"), "err", e.message || String(e)); $("run").disabled = false; }
+  };
+
+  const STAGES = ["Reading Damodaran, FRED and IMF data feeds…", "Agent is searching rating agencies and official sources…", "Agent is checking tax and lending conditions…", "Cross-checking figures and computing the WACC…"];
+  function watch(id, t0) {
+    clearTimeout(pollTimer);
+    const tick = async () => {
+      const { data: run, error } = await sb.from("wacc_runs").select("*").eq("id", id).maybeSingle();
+      const secs = (Date.now() - t0) / 1000;
+      if (error || !run) { showError("Could not read the run: " + (error ? error.message : "not found")); return done(); }
+      if (run.status === "running") {
+        if (secs > 300) { showError("The run did not finish in time (the engine was probably stopped by the platform). Please try again."); return done(); }
+        $("result").replaceChildren(h("h2", {}, "Working…"), h("p", {}, h("span", { class: "spinner" }), STAGES[Math.min(STAGES.length - 1, Math.floor(secs / 22))]), h("p", { class: "foot" }, Math.round(secs) + " s"));
+        pollTimer = setTimeout(tick, 3500); return;
+      }
+      if (run.status === "error") showError(run.error || "The run failed.", run); else render(run);
+      done();
+    };
+    const done = () => { $("run").disabled = false; loadHistory(); };
+    tick();
+  }
+  function showError(text, run) {
+    $("result").replaceChildren(h("h2", {}, "No result"), h("div", { class: "msg err" }, text),
+      ...(run?.result?.warnings || []).map((w) => h("div", { class: "msg warn" }, w)));
+  }
+
+  // ---------- history
+  async function loadHistory() {
+    const { data } = await sb.from("wacc_runs").select("id,created_at,status,inputs,result->headline").eq("user_id", session.user.id).order("created_at", { ascending: false }).limit(25);
+    $("hist").replaceChildren(...(data || []).map((r) => h("li", { onclick: () => watch(r.id, new Date(r.created_at).getTime()) },
+      h("span", {}, (r.inputs.project || r.inputs.country.name), " ", h("span", { class: "d" }, "· " + r.inputs.country.name + " · " + r.inputs.equity_pct + "/" + r.inputs.debt_pct)),
+      r.status === "done" && r.headline ? h("b", {}, r.headline.wacc.toFixed(2) + "%") : h("span", { class: "pill " + r.status }, r.status))));
+    if (!data || !data.length) $("hist").replaceChildren(h("li", { class: "d", style: "cursor:default" }, "Nothing yet."));
+  }
+
+  // ---------- result rendering
+  const P = (x, d = 2) => (typeof x === "number" ? x.toFixed(d) + "%" : "–");
+  const refSup = (n) => (n ? h("sup", { class: "ref" }, h("a", { href: "#ref" + n }, "[" + n + "]")) : null);
+  function render(run) {
+    const R = run.result, H = R.headline, I = R.inputs, A = R.agent || {};
+    const kids = [
+      h("h2", {}, (I.project || "WACC estimate") + " — " + I.country.name),
+      h("p", { class: "foot", style: "margin-top:-6px" }, `${I.equity_pct}% equity / ${I.debt_pct}% debt · ${H.currency} nominal · generated ${fmtDate(R.generated_at)}`),
+      h("div", { class: "hero" },
+        h("div", { class: "kpi main" }, h("div", { class: "l" }, "Indicative WACC (" + H.currency + ")"), h("div", { class: "v" }, P(H.wacc)),
+          h("div", { class: "r" }, `Indicative range ${P(H.range.low, 1)} – ${P(H.range.high, 1)}` + (H.currency !== "USD" ? ` · USD equivalent ${P(H.wacc_usd)}` : ""))),
+        h("div", { class: "kpi" }, h("div", { class: "l" }, "Cost of equity"), h("div", { class: "v" }, P(H.ke))),
+        h("div", { class: "kpi" }, h("div", { class: "l" }, "Cost of debt (pre-tax)"), h("div", { class: "v" }, P(H.kd_pre))),
+        h("div", { class: "kpi" }, h("div", { class: "l" }, "After-tax cost of debt"), h("div", { class: "v" }, P(H.kd_post))),
+        h("div", { class: "kpi" }, h("div", { class: "l" }, "Relevered beta"), h("div", { class: "v" }, H.beta_l.toFixed(2))),
+        h("div", { class: "kpi" }, h("div", { class: "l" }, "Sovereign rating used"), h("div", { class: "v" }, H.rating_used || "n/a"))),
+      ...(R.warnings || []).map((w) => h("div", { class: "msg warn" }, w)),
+
+      h("h3", {}, "Inputs and where they come from"),
+      h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Input"), h("th", { class: "n" }, "Value"), h("th", {}, "Source"), h("th", {}, "As of"))),
+        h("tbody", {}, ...R.components.map((c) => h("tr", {},
+          h("td", {}, c.label, c.note ? h("span", { class: "note" }, c.note) : null),
+          h("td", { class: "n" }, c.unit === "%" ? P(c.value) : c.value.toFixed(2)),
+          h("td", {}, c.source, refSup(c.ref)), h("td", {}, c.as_of || "")))))),
+
+      h("h3", {}, "Calculation method"),
+      h("p", { class: "foot", style: "margin-top:0" }, "CAPM with an additive country risk premium (Damodaran approach), sector beta relevered at the project's gearing (Hamada), cost of debt built up from the sovereign default spread. The arithmetic is done by the engine, not by the AI."),
+      ...R.steps.map((s) => h("div", { class: "step" }, h("div", { class: "t" }, s.title), h("div", { class: "f" }, s.formula), h("div", { class: "c" }, s.calc + " = ", h("b", {}, s.result)))),
+
+      h("h3", {}, "Sensitivity to gearing"),
+      h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", { class: "n" }, "Debt share"), h("th", { class: "n" }, "Relevered beta"), h("th", { class: "n" }, "Cost of equity"), h("th", { class: "n" }, "WACC"))),
+        h("tbody", {}, ...R.sensitivity.map((s) => h("tr", { class: s.debt_pct === I.debt_pct ? "hl" : "" },
+          h("td", { class: "n" }, s.debt_pct + "%"), h("td", { class: "n" }, s.beta_l.toFixed(2)), h("td", { class: "n" }, P(s.ke)), h("td", { class: "n" }, P(s.wacc))))))),
+
+      h("h3", {}, "What the research agent found"),
+    ];
+    if (A.ratings && A.ratings.length) kids.push(h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Agency"), h("th", {}, "Rating"), h("th", {}, "Outlook"), h("th", {}, "As of"))),
+      h("tbody", {}, ...A.ratings.map((x) => h("tr", {}, h("td", {}, x.agency, refSup(x.ref)), h("td", {}, x.rating), h("td", {}, x.outlook), h("td", {}, x.as_of)))))));
+    if (A.sovereign_yield) kids.push(h("p", {}, "Market cross-check: ", h("b", {}, P(A.sovereign_yield.value)), ` on ${A.sovereign_yield.instrument || "sovereign bond"} (${A.sovereign_yield.as_of || "recent"}), i.e. ${P(A.sovereign_yield.implied_spread)} over the US 10-year.`, refSup(A.sovereign_yield.ref)));
+    if (A.risk_notes && A.risk_notes.length) kids.push(h("ul", {}, ...A.risk_notes.map((n) => h("li", {}, n.text, refSup(n.ref)))));
+    if (A.commentary) kids.push(h("p", {}, h("b", {}, "Analyst comment: "), A.commentary));
+    if (!A.ok) kids.push(h("p", { class: "foot" }, "The live research step did not complete for this run."));
+    kids.push(h("p", { class: "foot" }, `Agent model: ${A.model || "–"} · ${A.searches || 0} web searches.`));
+
+    kids.push(h("h3", {}, "References"), h("ol", { class: "refs" }, ...R.references.map((r) => {
+      const u = safeUrl(r.url);
+      return h("li", { id: "ref" + r.n }, h("b", {}, r.publisher), " — ", u ? h("a", { href: u, target: "_blank", rel: "noopener noreferrer" }, r.title) : r.title,
+        r.as_of ? " (" + r.as_of + ")" : "", h("div", { class: "u" }, "Used for: " + r.used_for.join(", ") + (u ? " · " + new URL(u).hostname : "")));
+    })));
+    kids.push(h("p", { class: "foot" }, "Indicative estimate for discussion purposes, generated automatically from public sources; it is not investment advice and does not replace the company's approved hurdle rates or a review by Finance/Treasury. Check the references before using the figure in a board paper."));
+    kids.push(h("div", { class: "actions noprint" }, h("button", { class: "sec", onclick: () => window.print() }, "Print / save as PDF")));
+    $("result").replaceChildren(...kids);
+    if (window.innerWidth < 900) $("result").scrollIntoView({ behavior: "smooth" });
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

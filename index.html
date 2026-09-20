@@ -28,24 +28,23 @@
         <h2>New estimate</h2>
         <label>Project name</label>
         <input id="fProject" maxlength="120" placeholder="e.g. Banana deep-sea port, phase 2">
+        <label>Project description</label>
+        <textarea id="fDesc" maxlength="1200" placeholder="What the project is: scope, concession length, greenfield/brownfield, capacity, revenue currency, lenders approached…"></textarea>
+        <label>Type of project</label>
+        <select id="fSector">
+          <option value="ports">Ports &amp; terminals</option>
+          <option value="logistics">Logistics</option>
+          <option value="zones">Free zones &amp; economic zones</option>
+          <option value="marine">Marine services</option>
+        </select>
         <label>Country</label>
         <select id="fCountry"></select>
-        <label>Sector</label>
-        <select id="fSector">
-          <option value="ports">Ports &amp; container terminals</option>
-          <option value="logistics">Logistics, warehousing &amp; freight</option>
-          <option value="zones">Economic zones &amp; industrial parks</option>
-          <option value="marine">Marine services &amp; shipping</option>
-          <option value="rail">Rail &amp; inland corridors</option>
-        </select>
         <div class="row2">
           <div><label>Equity %</label><input id="fEq" type="number" min="10" max="100" step="1" value="40"></div>
           <div><label>Debt %</label><input id="fDebt" type="number" min="0" max="90" step="1" value="60"></div>
         </div>
         <label>Currency of the WACC</label>
         <select id="fCur"><option value="USD">USD (nominal)</option><option value="EUR">EUR (nominal)</option><option value="LOCAL">Local currency</option></select>
-        <label>Project description <small>(optional — helps the agent)</small></label>
-        <textarea id="fDesc" maxlength="1200" placeholder="Concession length, greenfield/brownfield, lenders approached, revenue currency…"></textarea>
         <details>
           <summary>Advanced overrides (leave empty to let the agent source everything)</summary>
           <div class="row2">
@@ -114,6 +113,7 @@
       currency: $("fCur").value, local_currency: opt.dataset.cur,
       overrides: { tax_pct: numOrNull("oTax"), kd_pct: numOrNull("oKd"), beta_u: numOrNull("oBeta"), crp_pct: numOrNull("oCrp"), rf_pct: numOrNull("oRf"), lambda: numOrNull("oLambda") },
     };
+    if (body.project.length < 2) return msg($("formMsg"), "err", "Please give the project a name.");
     if (Math.abs(body.equity_pct + body.debt_pct - 100) > 0.01 || body.equity_pct < 10) return msg($("formMsg"), "err", "Equity and debt must add up to 100 %, with at least 10 % equity.");
     try { localStorage.setItem("wacc.country", opt.value); } catch {}
     msg($("formMsg"), "", ""); $("run").disabled = true;
@@ -162,13 +162,17 @@
   }
 
   // ---------- result rendering
+  const SECTOR_LABELS = { ports: "Ports & terminals", logistics: "Logistics", zones: "Free zones & economic zones", marine: "Marine services", rail: "Rail & inland corridors" };
   const P = (x, d = 2) => (typeof x === "number" ? x.toFixed(d) + "%" : "–");
   const refSup = (n) => (n ? h("sup", { class: "ref" }, h("a", { href: "#ref" + n }, "[" + n + "]")) : null);
   function render(run) {
     const R = run.result, H = R.headline, I = R.inputs, A = R.agent || {};
     const kids = [
-      h("h2", {}, (I.project || "WACC estimate") + " — " + I.country.name),
-      h("p", { class: "foot", style: "margin-top:-6px" }, `${I.equity_pct}% equity / ${I.debt_pct}% debt · ${H.currency} nominal · generated ${fmtDate(R.generated_at)}`),
+      h("h2", { style: "font-size:20px;margin-bottom:6px" }, I.project || "WACC estimate"),
+      h("p", { style: "margin:0 0 8px" }, h("span", { class: "pill sector" }, (R.sector && R.sector.label) || SECTOR_LABELS[I.sector] || I.sector), " ", h("span", { class: "pill" }, I.country.name), " ",
+        h("span", { class: "pill" }, `${I.equity_pct}% equity / ${I.debt_pct}% debt`), " ", h("span", { class: "pill" }, H.currency + " nominal")),
+      I.description ? h("p", { class: "desc" }, I.description) : null,
+      h("p", { class: "foot", style: "margin-top:0" }, `Generated ${fmtDate(R.generated_at)}`),
       h("div", { class: "hero" },
         h("div", { class: "kpi main" }, h("div", { class: "l" }, "Indicative WACC (" + H.currency + ")"), h("div", { class: "v" }, P(H.wacc)),
           h("div", { class: "r" }, `Indicative range ${P(H.range.low, 1)} – ${P(H.range.high, 1)}` + (H.currency !== "USD" ? ` · USD equivalent ${P(H.wacc_usd)}` : ""))),
@@ -179,6 +183,22 @@
         h("div", { class: "kpi" }, h("div", { class: "l" }, "Sovereign rating used"), h("div", { class: "v" }, H.rating_used || "n/a"))),
       ...(R.warnings || []).map((w) => h("div", { class: "msg warn" }, w)),
 
+      ...(R.methods ? [
+        h("h3", {}, "WACC under three country-risk-premium methods"),
+        h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Method"), h("th", { class: "n" }, "Country risk premium"), h("th", { class: "n" }, "Total equity risk premium"), h("th", { class: "n" }, "Cost of equity"), h("th", { class: "n" }, "WACC"))),
+          h("tbody", {}, ...R.methods.map((m) => h("tr", { class: m.base ? "hl" : "" },
+            h("td", {}, m.label, m.base ? " (base case)" : "", h("span", { class: "note" }, m.how), h("span", { class: "note" }, "Source: " + m.source, refSup(m.ref))),
+            ...(m.available ? [h("td", { class: "n" }, P(m.crp)), h("td", { class: "n" }, P(m.total_erp)), h("td", { class: "n" }, P(m.ke)), h("td", { class: "n" }, P(m.wacc))]
+              : [h("td", { class: "n", colspan: "4" }, "not available")])))))),
+        h("p", { class: "foot" }, "Total equity risk premium = mature-market implied premium + country risk premium. Risk-free rate, beta, cost of debt, tax and gearing are identical across the three rows, so the differences come from the country-risk method only."),
+      ] : []),
+      ...(R.sector && R.sector.industries && R.sector.industries.length ? [
+        h("h3", {}, "Sector benchmark — " + R.sector.label),
+        h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Listed peer group (Damodaran, " + (R.sector.dataset || "") + ")"), h("th", { class: "n" }, "Firms"), h("th", { class: "n" }, "Levered beta"), h("th", { class: "n" }, "Industry D/E"), h("th", { class: "n" }, "Unlevered beta"))),
+          h("tbody", {}, ...R.sector.industries.map((x) => h("tr", {}, h("td", {}, x.industry), h("td", { class: "n" }, x.firms ?? "–"), h("td", { class: "n" }, x.beta_levered ?? "–"), h("td", { class: "n" }, x.de_pct != null ? x.de_pct.toFixed(0) + "%" : "–"), h("td", { class: "n" }, x.beta_unlevered)))))),
+        R.sector.tax_regime ? h("p", {}, h("b", {}, "Sector tax regime: "), P(R.sector.tax_regime.rate, 1) + " — " + R.sector.tax_regime.note, refSup(R.sector.tax_regime.ref), h("span", { class: "note", style: "display:block;color:var(--muted);font-size:12.5px" }, "The base case uses the standard statutory rate; enter this rate under “Advanced overrides” to apply it.")) : null,
+        R.sector.notes && R.sector.notes.length ? h("ul", {}, ...R.sector.notes.map((x) => h("li", {}, x.text, refSup(x.ref)))) : null,
+      ] : []),
       h("h3", {}, "Inputs and where they come from"),
       h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Input"), h("th", { class: "n" }, "Value"), h("th", {}, "Source"), h("th", {}, "As of"))),
         h("tbody", {}, ...R.components.map((c) => h("tr", {},

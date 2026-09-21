@@ -175,7 +175,7 @@
       h("p", { class: "foot", style: "margin-top:0" }, `Generated ${fmtDate(R.generated_at)}`),
       h("div", { class: "hero" },
         h("div", { class: "kpi main" }, h("div", { class: "l" }, "Indicative WACC (" + H.currency + ")"), h("div", { class: "v" }, P(H.wacc)),
-          h("div", { class: "r" }, `Indicative range ${P(H.range.low, 1)} – ${P(H.range.high, 1)}` + (H.currency !== "USD" ? ` · USD equivalent ${P(H.wacc_usd)}` : ""))),
+          h("div", { class: "r" }, `Range ${P(H.range.low, 1)} (low case) – ${P(H.range.high, 1)} (high case)` + (H.currency !== "USD" ? ` · USD equivalent ${P(H.wacc_usd)}` : ""))),
         h("div", { class: "kpi" }, h("div", { class: "l" }, "Cost of equity"), h("div", { class: "v" }, P(H.ke))),
         h("div", { class: "kpi" }, h("div", { class: "l" }, "Cost of debt (pre-tax)"), h("div", { class: "v" }, P(H.kd_pre))),
         h("div", { class: "kpi" }, h("div", { class: "l" }, "After-tax cost of debt"), h("div", { class: "v" }, P(H.kd_post))),
@@ -191,6 +191,15 @@
             ...(m.available ? [h("td", { class: "n" }, P(m.crp)), h("td", { class: "n" }, P(m.total_erp)), h("td", { class: "n" }, P(m.ke)), h("td", { class: "n" }, P(m.wacc))]
               : [h("td", { class: "n", colspan: "4" }, "not available")])))))),
         h("p", { class: "foot" }, "Total equity risk premium = mature-market implied premium + country risk premium. Risk-free rate, beta, cost of debt, tax and gearing are identical across the three rows, so the differences come from the country-risk method only."),
+      ] : []),
+      ...(R.range_cases ? [
+        h("h3", {}, "How the indicative range is built — low, base and high cases"),
+        h("div", { class: "tw" }, h("table", {}, h("thead", {}, h("tr", {}, h("th", {}, "Case"), h("th", { class: "n" }, "Unlevered beta"), h("th", { class: "n" }, "Relevered beta"), h("th", { class: "n" }, "Country risk premium"), h("th", { class: "n" }, "Lender spread"), h("th", { class: "n" }, "Cost of equity"), h("th", { class: "n" }, "Cost of debt (pre-tax)"), h("th", { class: "n" }, "WACC"))),
+          h("tbody", {}, ...R.range_cases.map((c) => h("tr", { class: c.label === "Base case" ? "hl" : "" },
+            h("td", {}, c.label, h("span", { class: "note" }, c.basis)),
+            h("td", { class: "n" }, c.beta_u.toFixed(2)), h("td", { class: "n" }, c.beta_l.toFixed(2)), h("td", { class: "n" }, P(c.crp)),
+            h("td", { class: "n" }, c.project_spread == null ? "override" : P(c.project_spread)), h("td", { class: "n" }, P(c.ke)), h("td", { class: "n" }, P(c.kd_pre)), h("td", { class: "n" }, P(c.wacc))))))),
+        h("p", { class: "foot" }, "Risk-free rate, mature-market premium, tax and gearing are the same in the three cases. The low and high ends of the headline range are the WACC of the low and high cases."),
       ] : []),
       ...(R.sector && R.sector.industries && R.sector.industries.length ? [
         h("h3", {}, "Sector benchmark — " + R.sector.label),

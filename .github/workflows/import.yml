@@ -1,0 +1,31 @@
+# Loads every JSON file added or changed under weekly/ into the Supabase table market_snapshots.
+# Repo > Settings > Secrets and variables > Actions > New repository secret:
+#   SUPABASE_URL          = https://urijnuzfepwtkouusslh.supabase.co
+#   SUPABASE_SERVICE_KEY  = the "service_role" / secret key from Supabase > Project Settings > API Keys
+name: Import weekly data
+on:
+  push:
+    paths: ["weekly/*.json"]
+  workflow_dispatch:
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 2 }
+      - name: Pick files
+        id: files
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            files=$(ls weekly/*.json 2>/dev/null | sort | tail -1)
+          else
+            files=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'weekly/*.json' | tr '\n' ' ')
+          fi
+          echo "list=$files" >> "$GITHUB_OUTPUT"
+          echo "Files: $files"
+      - name: Import into Supabase
+        if: steps.files.outputs.list != ''
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python3 scripts/import_to_supabase.py ${{ steps.files.outputs.list }}

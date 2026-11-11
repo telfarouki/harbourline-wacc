@@ -59,6 +59,7 @@
         <div class="actions"><button id="run">Run the agent</button></div>
         <div id="formMsg"></div>
         <p class="foot">A run takes 1–2 minutes: data feeds first, then live web research, then the calculation.</p>
+        <p class="foot hidden" id="refData"></p>
       </div>
       <div class="card">
         <h2>My previous estimates</h2>
@@ -99,6 +100,18 @@
     $("auth").replaceChildren(); $("app").classList.remove("hidden");
     $("adminLink").classList.toggle("hidden", !isAdm);
     loadHistory();
+    loadRefData();
+  }
+  // weekly reference data (table market_snapshots, refreshed every Saturday)
+  async function loadRefData() {
+    try {
+      const { data } = await sb.from("market_snapshots").select("week,as_of,changes").order("as_of", { ascending: false }).limit(1);
+      if (!data || !data.length) return;
+      const d = new Date(data[0].as_of + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+      const n = (data[0].changes || []).length;
+      $("refData").textContent = "Reference data refreshed " + d + " (week " + data[0].week.slice(-2) + ")" + (n ? " · " + n + " change" + (n > 1 ? "s" : "") + " since the previous week" : "") + ".";
+      $("refData").classList.remove("hidden");
+    } catch {}
   }
   $("signOut").onclick = async () => { await sb.auth.signOut(); location.reload(); };
 

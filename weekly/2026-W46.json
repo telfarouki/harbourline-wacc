@@ -1,6 +1,6 @@
 {
  "week": "2026-W46",
- "as_of": "2026-11-11",
+ "as_of": "2026-11-14",
  "global": {
   "us10y_pct": 4.88,
   "us10y_date": "2026-11-09",
@@ -8,7 +8,7 @@
   "damodaran_update": "January 5, 2026",
   "mature_erp_pct": 4.23,
   "damodaran_source_url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html",
-  "note": "mature_erp_pct is the total ERP the table shows for Aaa countries (US ERP 4.46 minus US default spread 0.23); the page states the formula, not the number"
+  "note": "mature_erp_pct is the total ERP the table shows for Aaa countries (US ERP 4.46 minus US default spread 0.23); the page states the formula, not the number; global block NOT refreshed on 2026-11-14 (FRED and Damodaran pages could not be fetched in the run) - values are those read on 2026-11-11"
  },
  "countries": {
   "AFG": {
@@ -50,16 +50,16 @@
    "corporate_tax_pct": 25,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 9.99,
+    "yield_pct": 10.01,
     "instrument": "Angola 9.875% USD due 31 Mar 2037 (XS3328007870)",
-    "as_of": "2026-11-10",
+    "as_of": "2026-11-13",
     "source_url": "https://www.africaneurobonds.com/learn/angola/9-875-percent-2037/"
    },
    "project_spread_pct": 3.6,
    "project_spread_basis": "LIBOR + 3.6% on the December 2016 USD 4.1bn syndicated buyer's credit led by ICBC to the Government of Angola for the Caculo Cabaca dam and transmission line (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/67110/",
    "checked": "2026-11-11",
-   "note": "Fitch as_of is press-report date (action date not stated); S&P date = Friday before 17 Aug 2026 report; Eurobond: Eurobond yield = mid of indicative bid/ask yields 10.05/9.93 (africaneurobonds.com close, aggregator)."
+   "note": "Fitch as_of is press-report date (action date not stated); S&P date = Friday before 17 Aug 2026 report; Eurobond: Eurobond yield = mid of indicative bid/ask yields 10.07/9.95 (africaneurobonds.com close, aggregator)."
   },
   "ARE": {
    "ratings": {
@@ -120,16 +120,16 @@
    "corporate_tax_pct": 18,
    "tax_source_url": "https://taxsummaries.pwc.com/armenia/corporate/taxes-on-corporate-income",
    "eurobond": {
-    "yield_pct": 5.5885,
-    "instrument": "Republic of Armenia 3.95% USD notes due 26 Sep 2029 (XS2010043904)",
-    "as_of": "2026-08-24",
-    "source_url": "https://www.finanzen.net/anleihen/a2r8d0-armenien-anleihe"
+    "yield_pct": 6.966,
+    "instrument": "Republic of Armenia 6.75% USD notes due 12 Mar 2035 (XS3020792696)",
+    "as_of": "2026-10-01",
+    "source_url": "https://www.comdirect.de/inf/anleihen/XS3020792696"
    },
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Fitch 2026-01-16: aggregator shows an upgrade from B+, Armenian press headline says outlook revised to positive and BB- affirmed - rating/outlook agree; later affirmations not checked; Eurobond: Eurobond quote is the 2029 bond (~3y, not 10y) and >2 months old; no quote found for a ~10y USD bond. | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Re-verified 2026-11-14: aggregator shows no rating action after Moody's 2026-07-28 (outlook stable->positive); Fitch 2026-01-16: aggregator shows an upgrade from B+, Armenian press headline says outlook revised to positive and BB- affirmed - rating/outlook agree; CIT 18% (PwC, last reviewed 2026-06-30); Eurobond: switched from the 3.95% 2029 bond (5.5885% on 2026-08-24) to the ~10y 6.75% 2035 benchmark; comdirect quote (Frankfurt, price 99.00) is dated 2026-10-01, no fresher dated yield found. | no documented project-loan margin found"
   },
   "AUS": {
    "ratings": {
@@ -245,21 +245,21 @@
    "ratings": {
     "moodys": null,
     "sp": {
-     "rating": "CCC+",
+     "rating": "B-",
      "outlook": "stable",
-     "as_of": "2026-05-08",
-     "source_url": "https://www.financialafrik.com/en/2026/05/08/breaking-news-burkina-faso-sp-confirms-ccc-c-rating-with-stable-outlook/"
+     "as_of": "2026-11-06",
+     "source_url": "https://www.financialafrik.com/en/?p=495044"
     },
     "fitch": null
    },
    "corporate_tax_pct": 27.5,
-   "tax_source_url": "https://tradingeconomics.com/country-list/corporate-tax-rate?continent=africa",
+   "tax_source_url": "https://taxatlas.io/country/burkina-faso/corporate-tax",
    "eurobond": null,
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "rated by S&P only; tax from aggregator; | no USD sovereign bond quote found; no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "rated by S&P only (fxempire lists Moody's/Fitch NR; fxempire S&P row stale); S&P upgraded CCC+->B- stable on 2026-11-06 (Financial Afrik; africtelegraph 2026-11-07 corroborates B-); tax 27.5 from aggregators (taxatlas 2026, tradingeconomics), no PwC page; | no USD sovereign bond quote found; no documented project-loan margin found"
   },
   "BGD": {
    "ratings": {
@@ -313,7 +313,7 @@
     }
    },
    "corporate_tax_pct": 0,
-   "tax_source_url": "https://tradingeconomics.com/bahrain/corporate-tax-rate",
+   "tax_source_url": "https://taxsummaries.pwc.com/bahrain/corporate/taxes-on-corporate-income",
    "eurobond": {
     "yield_pct": 7.53,
     "instrument": "Bahrain generic 10Y sovereign yield (ADCB Asset Management GCC Weekly, Bloomberg data; specific bond not named)",
@@ -323,8 +323,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "S&P date is the Nov 2025 downgrade; press says B/stable maintained May 2026 (exact day not found). Tax 0% from aggregator (tradingeconomics citing MoF), not PwC - general CIT only, oil/gas regime and 15% top-up tax for large MNEs not verified. | Eurobond: Eurobond quote is >2 months old (26 Aug 2026) and is a generic 10Y yield; source table does not name the bond or state USD explicitly (report text refers to the USD sovereign market). Cross-check: Markaz daily 14 Jul 2026 showed Bahrain 2036 at 7.54%. | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Re-verified 14 Nov 2026: Moody's B2, outlook stable->negative on 18 Apr 2026 (The National); Fitch cut B+->B/stable 23 Feb 2026 (arynews, fxempire); S&P date is the Nov 2025 downgrade, B/stable affirmed since (GDN 14 Mar 2026; The National 23 May 2026, exact days not given). No action found 3-14 Nov 2026. Tax: PwC (reviewed 26 Jul 2026) - no general CIT; 46% on oil/gas companies; 15% domestic minimum top-up tax for large MNE groups from 2025. | Eurobond: quote is >2 months old (26 Aug 2026) and is a generic 10Y yield, re-read in source; table does not name the bond (report text refers to the USD sovereign market). ADCB lists a newer GCC weekly (6 Nov 2026) but its PDF could not be retrieved. Cross-check: Markaz daily 14 Jul 2026 showed Bahrain 2036 at 7.54%. | no documented project-loan margin found (not re-searched this run)"
   },
   "BRA": {
    "ratings": {
@@ -350,9 +350,9 @@
    "corporate_tax_pct": 34,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 6.376,
+    "yield_pct": 6.4625,
     "instrument": "Federative Republic of Brazil 7.125% USD global bonds due 20 Jan 2037 (US105756BK57)",
-    "as_of": "2026-11-10",
+    "as_of": "2026-11-12",
     "source_url": "https://www.finanzen.net/anleihen/a0gl1x-brasilien-anleihe"
    },
    "project_spread_pct": 1.7,
@@ -463,7 +463,7 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
+   "checked": "2026-11-14",
    "note": "Rating as_of dates are publication dates of the finance-ministry/press reports of the affirmations. Tax from PwC quick chart (chart shows '25 or 27' without saying which regime; higher rate taken) Eurobond: Eurobond quote is the 2034 bond (~7y). | no documented project-loan margin found"
   },
   "CIV": {
@@ -525,16 +525,16 @@
    "corporate_tax_pct": 33,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 10.65,
-    "instrument": "Cameroon 8.875% Jan 2033 USD",
-    "as_of": "2026-10-19",
-    "source_url": "https://ecomatin.net/fitch-abaisse-la-note-souveraine-du-cameroun-a-b"
+    "yield_pct": 10.75,
+    "instrument": "Cameroon 8.875% USD due 30 Jan 2033 (XS3284960625)",
+    "as_of": "2026-11-13",
+    "source_url": "https://www.africaneurobonds.com/learn/cameroon/8-875-percent-2033/"
    },
    "project_spread_pct": 4.0,
    "project_spread_basis": "6-month LIBOR + 4% on China Eximbank's January 2015 USD 678.3m 15-year buyer's credit to Cameroon (MINEPAT) for the Yaounde water supply project from the Sanaga river (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/57333",
-   "checked": "2026-11-11",
-   "note": "Fitch downgraded B to B- on 2026-10-16; Moody's date is a periodic review (no rating action); tax 33% = 30% plus 10% council surcharge (PwC headline); eurobond quote ~3 weeks old (Bloomberg via EcoMatin);"
+   "checked": "2026-11-14",
+   "note": "Fitch downgraded B to B- on 2026-10-16; Moody's date is a periodic review (no rating action); tax 33% = 30% plus 10% council surcharge (PwC headline, reviewed Aug 2026); Eurobond yield = mid of indicative bid/ask yields 10.91/10.59 (africaneurobonds.com close, aggregator; price 93.375/94.375);"
   },
   "COD": {
    "ratings": {
@@ -564,7 +564,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "eurobond figure is the yield at issue on 2026-04-09 (stale, 7 months; no secondary quote found); Moody's date is a periodic review committee, stable outlook taken from tradingeconomics; not rated by Fitch per aggregators; Eurobond: Eurobond yield = mid of indicative bid/ask yields 9.77/9.62 (africaneurobonds.com close, aggregator). Issued Apr 2026, amortising. | no documented project-loan margin found"
+   "note": "Moody's date is a periodic review committee, stable outlook per aggregators (tradingeconomics, anansihq); not rated by Fitch per aggregators; Eurobond yield = mid of indicative bid/ask yields 9.77/9.62 (africaneurobonds.com close 10 Nov, aggregator; close 12 Nov price 98.25/99.25, yield page not reachable). Issued Apr 2026, amortising. | no documented project-loan margin found"
   },
   "COG": {
    "ratings": {
@@ -599,7 +599,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "eurobond figure is the issue rate of 2026-05-20 (stale, ~6 months; no secondary-market quote found; an unconfirmed 11.625% for the 2035 note was reported in Oct 2026); S&P CCC+ reported as held in Jan 2026 but the last dated affirmation found is 2025-07-25 and its outlook may have changed since; Fitch 2026-08-14 action raised the local-currency rating and kept FC at CCC+ (no outlook at this level); Eurobond: Eurobond yield = mid of indicative bid/ask yields 10.9/10.69 (africaneurobonds.com close, aggregator). Amortising 2032-36. | no documented project-loan margin found"
+   "note": "S&P CCC+: last dated affirmation found is 2025-07-25; an S&P note of 2026-05-25 kept CCC+ (EcoMatin, outlook not stated) and anansihq (Oct 2026) lists CCC+ stable; Moody's Caa2 positive since 2026-05-26; Fitch 2026-08-14 action raised the local-currency rating and kept FC at CCC+ (no outlook at this level); Eurobond yield = mid of indicative bid/ask yields 10.9/10.69 (africaneurobonds.com close 10 Nov, aggregator; close 12 Nov price 92.875/93.875, yield page not reachable). Amortising 2032-36. | no documented project-loan margin found"
   },
   "COM": {
    "ratings": {
@@ -661,8 +661,8 @@
     "moodys": {
      "rating": "Ba2",
      "outlook": "stable",
-     "as_of": null,
-     "source_url": "https://www.secmca.org/wp-content/uploads/2026/07/Informe-Riesgo-Pais-2026-T2.pdf"
+     "as_of": "2025-08-01",
+     "source_url": "https://ensegundos.do/2025/08/01/moodys-mejora-calificacion-crediticia-de-republica-dominicana-a-ba2-con-perspectiva-estable"
     },
     "sp": {
      "rating": "BB",
@@ -673,8 +673,8 @@
     "fitch": {
      "rating": "BB",
      "outlook": "stable",
-     "as_of": "2026-11-06",
-     "source_url": "https://revistamercado.do/market-brief/finanzas/por-que-fitch-subio-la-nota-de-rd-a-bb-lo-que-significa-para-la-deuda-del-pais-y-los-prestamos/"
+     "as_of": "2026-11-03",
+     "source_url": "https://ensegundos.do/2026/11/03/fitch-ratings-eleva-la-calificacion-crediticia-de-republica-dominicana-a-bb-con-perspectiva-estable/"
     }
    },
    "corporate_tax_pct": 30,
@@ -688,8 +688,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Fitch upgrade BB- to BB reported 2026-11-06 (single press source, exact action date not stated; fxempire still shows BB-). Moody's upgrade Ba3 to Ba2 was in Q3 2025, exact date not found. Tax from PwC quick chart Eurobond: Eurobond quote is the 2032 bond (~6y), dated 2026-09-30; undated finanzen.net list showed 7.09% for the 6.15% 2038. | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Fitch upgrade BB- to BB: as_of is the date of the first press/government reports (2026-11-03, several outlets); Fitch's own release not seen. Moody's upgrade Ba3 to Ba2 announced 2025-08-01. S&P date is last rating change. Tax from PwC quick chart Eurobond: Eurobond quote is the 2032 bond (~6y), still dated 2026-09-30 on 2026-11-14; undated finanzen.net list showed 7.089% for the 6.15% 2038. | no documented project-loan margin found"
   },
   "DZA": {
    "ratings": {
@@ -730,16 +730,16 @@
    "corporate_tax_pct": 25,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 7.6471,
-    "instrument": "Republic of Ecuador 5.5% step-up USD bonds due 31 Jul 2040 (XS2214239175)",
-    "as_of": "2026-09-01",
-    "source_url": "https://www.finanzen.net/anleihen/a281ff-ecuador-anleihe"
+    "yield_pct": 8.7305,
+    "instrument": "Republic of Ecuador 5.5% step-up USD bonds due 31 Jul 2040 (144A tranche, XS2214239258)",
+    "as_of": "2026-11-13",
+    "source_url": "https://www.finanzen.net/anleihen/a281fe-ecuador-anleihe/xqtx"
    },
    "project_spread_pct": 4.2,
    "project_spread_basis": "6-month LIBOR + 4.2% on China Eximbank's October 2014 USD 484.6m 15-year buyer's credit to the Government of Ecuador for the 500kV/230kV transmission lines and substations project (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/58432/",
    "checked": "2026-11-11",
-   "note": "S&P upgrade B- to B announced by finance ministry 2026-08-13. A press item hints Moody's/Fitch may have upgraded again after Aug 2026: not verified. Tax from PwC quick chart (chart shows 22%, 25% or 28% depending on shareholder structure and disclosure compliance; middle rate taken) Eurobond: Eurobond quote >2 months old and ~14y tenor; an undated finanzen.net list showed 9.27% for the same bond, so treat with caution."
+   "note": "S&P upgrade B- to B announced by finance ministry 2026-08-13. No Moody's/Fitch action after Aug 2026 found (fxempire still shows Caa1 of 2026-01-26 and B- of 2026-02-25). Tax from PwC quick chart (chart shows 22%, 25% or 28% depending on shareholder structure and disclosure compliance; middle rate taken) Eurobond: ~14y tenor; quote is the 144A tranche of the 2040 bond (Reg S page XS2214239175 not reachable; undated finanzen.net list showed 8.763% for it)."
   },
   "EGY": {
    "ratings": {
@@ -774,7 +774,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "Moody's upgraded Caa1->B3 on 2026-10-16; S&P and Fitch October 2026 affirmation dates are approximate (press-article date, exact action day not stated); Eurobond: Eurobond yield = mid of indicative bid/ask yields 8.26/8.12 (africaneurobonds.com close, aggregator). 7.5y to maturity; next USD line is 2040. | no documented project-loan margin found"
+   "note": "Moody's upgraded Caa1->B3 on 2026-10-16; S&P and Fitch October 2026 affirmation dates are approximate (Arab News 2026-10-11 says S&P acted a day after Fitch; exact days not stated); Eurobond: Eurobond yield = mid of indicative bid/ask yields 8.26/8.12 (africaneurobonds.com close, aggregator). 7.5y to maturity; next USD line is 2040. | no documented project-loan margin found"
   },
   "ERI": {
    "ratings": {
@@ -808,8 +808,8 @@
     "fitch": {
      "rating": "RD",
      "outlook": null,
-     "as_of": "2026-10-17",
-     "source_url": "https://capitalethiopia.com/2026/10/17/ethiopia-nears-eurobond-exchange-deal-as-fitch-flags-path-out-of-default/"
+     "as_of": "2026-10-16",
+     "source_url": "https://www.investing.com/news/world-news/fitch-affirms-ethiopia-at-rd-as-eurobond-debt-restructuring-progresses-4954381"
     }
    },
    "corporate_tax_pct": 30,
@@ -818,8 +818,8 @@
    "project_spread_pct": 3.0,
    "project_spread_basis": "LIBOR + 3% on China Eximbank's 2013 USD 2.49bn 15-year loan to the Government of Ethiopia for the Addis Ababa-Djibouti railway (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/30171/",
-   "checked": "2026-11-11",
-   "note": "in default: only USD bond is the defaulted 6.625% 2024 note (USD1bn); agreement in principle Jun 2026 to exchange into USD880m 6.15% 2029 amortising bond, exchange not yet completed - no usable yield. Moody's and Fitch as_of are press-report dates of affirmations (exact action dates not found); S&P SD from aggregator, no later action found. Eurobond: USD 1bn 6.625% 2024 Eurobond exists but is in default; exchange expected by Dec 2026, not yet launched; no yield quote found."
+   "checked": "2026-11-14",
+   "note": "in default: only USD bond is the defaulted 6.625% 2024 note (USD1bn); agreement in principle Jun 2026 to exchange into USD880m 6.15% 2029 amortising bond; exchange offer still not launched as of 8 Nov 2026 (central bank governor: 'by December') - no usable yield (https://www.riotimesonline.com/ethiopia-bond-swap-december-2026/). Moody's as_of is press-report date of the affirmation (exact action date not found); Fitch as_of is the date of the first press report of the Oct 2026 RD affirmation; S&P SD from aggregator (Dec 2023), no later action found. Project-spread source page (AidData) could not be re-opened on 2026-11-14, value kept."
   },
   "GAB": {
    "ratings": {
@@ -840,16 +840,16 @@
    "corporate_tax_pct": 30,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 11.958,
-    "instrument": "Gabon 9.375% 2034 USD",
-    "as_of": "2026-10-16",
-    "source_url": "https://www.sikafinance.com/marches/gabon-1-5-milliard-usd-leves-mais-des-investisseurs-qui-exigent-toujours-pres-de-12-de-rendement-sur-la-dette_65036"
+    "yield_pct": 12.645,
+    "instrument": "Gabon 9.375% USD due 21 Oct 2034 (XS3517332253)",
+    "as_of": "2026-11-13",
+    "source_url": "https://www.africaneurobonds.com/learn/gabon/9-375-percent-2034/"
    },
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's outlook cut to negative: fxempire dates it 2026-06-24, Financial Afrik 25/26 June; S&P rating withdrawn 2016; eurobond yield is an indicative quote (MSA Trader via Sika Finance), ~4 weeks old; 2033 bond hit 13.1% on 2026-10-02; tax 30% standard (35% oil, gas and mining); | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Moody's outlook cut to negative: fxempire dates it 2026-06-24, Financial Afrik 25/26 June; S&P rating withdrawn 2016; Fitch CCC- since 2025-12-19, affirmed 2026-05-22 (no outlook at this level); Eurobond yield = mid of indicative bid/ask yields 12.77/12.52 (africaneurobonds.com close, aggregator; price 84.75/85.75); tax 30% standard (35% oil, gas and mining; PwC reviewed Aug 2026); | no documented project-loan margin found (not re-searched this run)"
   },
   "GBR": {
    "ratings": {
@@ -957,14 +957,14 @@
     },
     "fitch": null
    },
-   "corporate_tax_pct": 30,
-   "tax_source_url": "https://tradingeconomics.com/country-list/corporate-tax-rate?continent=africa",
+   "corporate_tax_pct": 25,
+   "tax_source_url": "https://www.mbudget.gov.gn/wp-content/uploads/Code-General-des-Impots.pdf",
    "eurobond": null,
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "rated by S&P only; tax 30 from aggregator, not cross-checked against PwC/tax authority (general rate may be lower than sector rates); | no USD sovereign bond quote found; no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "rated by S&P only (inaugural B+ Sept 2025; outlook to positive 2026-03-13; no later action found); tax: general IS rate 25% per Code General des Impots Art. 229-II on Budget Ministry site (document titled 'projet'; taxatlas 2026 agrees); 35% telecoms/banks/insurance/petroleum distribution, 30% mining; tradingeconomics still shows 30; | no USD sovereign bond quote found; no documented project-loan margin found"
   },
   "GMB": {
    "ratings": {
@@ -1249,7 +1249,7 @@
    "project_spread_basis": "6-month LIBOR + 3% on China Eximbank's December 2015 USD 1.39bn buyer's credit to the Government of Kenya for Standard Gauge Railway Phase 2A (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/47025/",
    "checked": "2026-11-11",
-   "note": "S&P as_of is press-report date of affirmation; Fitch date inferred from two press reports ('Friday' before 24 Jan 2026). A Kenya Times article dated 15 Oct 2026 headlined 'Fitch rates Kenya B-' could not be fetched - a later Fitch affirmation may exist."
+   "note": "S&P as_of is press-report date of affirmation; Fitch date inferred from press reports ('Friday last week' in a 26 Jan 2026 article). A Kenya Times article dated 15 Oct 2026 headlined 'Fitch rates Kenya B-' still could not be fetched - a later Fitch affirmation may exist. CBK bulletin for week ending 13 Nov 2026 exists but could not be opened (https://www.centralbank.go.ke/uploads/weekly_bulletin/816739182_Weekly%20Bulletin%20Week%20Ending%20November%2013,%202026.pdf) - yield left at 5 Nov quote."
   },
   "KGZ": {
    "ratings": {
@@ -1278,8 +1278,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's upgraded B3 to B2 on 2026-10-05; S&P date is the initial assignment, later affirmations not found; PwC tax page last reviewed 2024-07; Eurobond: Only USD sovereign bond is 7.75% due 2030 (XS3080755591); no yield quote found (price 103.89 dated 2026-01-27 on finanzen.net, no yield shown). | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Re-verified 2026-11-14: Moody's upgraded B3 to B2 on 2026-10-05; S&P date is the initial assignment (aggregator shows no later change); Fitch affirmation reported 2026-04-21/22; CIT 10% (PwC page last reviewed 2024-07-25); Eurobond: Only USD sovereign bond is 7.75% due 3 Jun 2030 (XS3080755591); no yield quote found (cbonds page shows no quote). | no documented project-loan margin found (AidData China Eximbank loans seen are fixed-rate 2% concessional)"
   },
   "KOR": {
    "ratings": {
@@ -1305,9 +1305,9 @@
    "corporate_tax_pct": 25,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 4.98,
+    "yield_pct": 5.13,
     "instrument": "Republic of Korea 1.0% USD notes due 16 Sep 2030 (US50064FAS39)",
-    "as_of": "2026-11-11",
+    "as_of": "2026-11-13",
     "source_url": "https://www.finanzen.ch/obligationen/korea-_republikdl-notes_202030-obligation-2030-us50064fas39"
    },
    "project_spread_pct": null,
@@ -1433,8 +1433,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Fitch upgraded CCC+ to B- (reported 2026-09-22/23, exact day unclear); S&P as_of is the article date; tax rate from aggregator (PwC page not reached); restructured USD bonds trade but no yield quote obtained; Eurobond: USD restructured bonds trade (e.g. 3.6% step-up due 2035, XS2966242179) but no dated quote found; undated finanzen.net list showed 6.50%. | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Re-verified 2026-11-14: Fitch upgraded CCC+ to B- on 2026-09-22 (aggregator and press agree); Moody's affirmation 2026-08-24; S&P as_of is the article date; tax rate from aggregator (Sri Lanka not listed on the PwC quick chart, PwC country page not reached); Eurobond: USD restructured bonds trade (e.g. 3.6% step-up due 2035, XS2966242179) but no dated quote found (CBSL weekly indicators 2026-11-06 gave no usable ISB yields). | no documented project-loan margin found (AidData China Eximbank loans seen are fixed-rate 2%)"
   },
   "LSO": {
    "ratings": {
@@ -1540,10 +1540,10 @@
      "source_url": "https://clubofmozambique.com/news/moodys-downgrades-mozambiques-foreign-currency-ratings-to-caa3-maintains-stable-outlook/"
     },
     "sp": {
-     "rating": "CCC+",
+     "rating": "CCC",
      "outlook": "negative",
-     "as_of": "2025-10-10",
-     "source_url": "https://clubofmozambique.com/news/mozambique-foreign-currency-rating-affirmed-at-ccc-outlook-negative-local-currency-sd-rating-affirmed/"
+     "as_of": "2026-09-25",
+     "source_url": "https://www.theasianbanker.com/updates-and-articles/mozambique-downgraded-to-ccc-as-debt-restructuring-risk-rises"
     },
     "fitch": {
      "rating": "CC",
@@ -1555,16 +1555,16 @@
    "corporate_tax_pct": 32,
    "tax_source_url": "https://taxsummaries.pwc.com/mozambique/corporate/taxes-on-corporate-income",
    "eurobond": {
-    "yield_pct": 11.265,
+    "yield_pct": 11.275,
     "instrument": "Mozambique 9% USD due 15 Sep 2031 (XS2051203862)",
-    "as_of": "2026-11-10",
+    "as_of": "2026-11-13",
     "source_url": "https://www.africaneurobonds.com/learn/mozambique/9-percent-2031/"
    },
    "project_spread_pct": 1.9,
    "project_spread_basis": "LIBOR + 190 bps on the 2017 14-year syndicated project loan (incl. ICBC USD 200m) to Corredor Logistico Integrado de Nacala (Vale/Mitsui) for the Nacala Corridor railway and port (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/57652/",
-   "checked": "2026-11-11",
-   "note": "distressed, restructuring risk; S&P entry may be stale (latest found is Oct 2025, local-currency SD; a 2026 S&P action is likely but was not confirmed); eurobond quote is ~7 months old (press article date, quote date not stated); Eurobond: Eurobond yield = mid of indicative bid/ask yields 11.5/11.03 (africaneurobonds.com close, aggregator). Only USD sovereign bond; amortising, under 5y."
+   "checked": "2026-11-14",
+   "note": "distressed, restructuring risk; S&P cut foreign-currency rating CCC+ -> CCC (negative) on 2026-09-25 (The Asian Banker 2026-10-01, fxempire table agrees); Moody's date = Friday before 2026-09-21 press report; Fitch assigns no outlook at CC; Eurobond: Eurobond yield = mid of indicative bid/ask yields 11.51/11.04 (africaneurobonds.com close, aggregator). Only USD sovereign bond; amortising, under 5y."
   },
   "MRT": {
    "ratings": {
@@ -1598,8 +1598,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's Baa3 negative still cited in Moody's issuer comment of 4 May 2026; no later action found. S&P set null: tradingeconomics shows BBB-/stable (Jul 2023) followed by a blank S&P row dated 18 Mar 2026 - status unclear, verify. No USD sovereign eurobond found. CIT 15% headline (plus CSR/levies/fair share contribution per PwC). | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Moody's Baa3 negative (outlook set 30 Jan 2025) maintained in Moody's statement of 26 Jun 2026 (https://fr.allafrica.com/stories/202606290489.html); no later action found. S&P null: S&P withdrew its Mauritius ratings (cbonds headline https://cbonds.com/news/3839947/, page not readable; tradingeconomics shows blank S&P row dated 18 Mar 2026 after BBB-/stable of Jul 2023). Not rated by Fitch. No USD sovereign eurobond found. CIT 15% headline (plus CSR/levies/fair share contribution per PwC, reviewed 15 Jun 2026). | no documented project-loan margin found"
   },
   "MWI": {
    "ratings": {
@@ -1694,7 +1694,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "eurobond quote is stale (DMO sheet of 2026-06-26, >4 months old; later DMO sheets not reachable); tax 30% is the large-company rate (small companies 0%); S&P not re-checked for a Nov 2026 review; Eurobond: Eurobond yield = mid of indicative bid/ask yields 7.78/7.68 (africaneurobonds.com close, aggregator). DMO close 29 Oct 2026 for the Jan-2036 line was 7.816% (pmnewsnigeria.com). | no documented project-loan margin found"
+   "note": "eurobond quote is stale (DMO sheet of 2026-06-26, >4 months old; later DMO sheets not reachable); tax 30% is the large-company rate (small companies 0%); S&P not re-checked for a Nov 2026 review; Eurobond: Eurobond yield = mid of indicative bid/ask yields 7.78/7.68 (africaneurobonds.com close, aggregator). DMO close 29 Oct 2026 for the Jan-2036 line was 7.816% (pmnewsnigeria.com). | no documented project-loan margin found Not refreshed 2026-11-14: africaneurobonds.com close 12 Nov was 104.75/105.50 but the yield page was not reachable. S&P reviews Nigeria mid-May/mid-Nov - a Nov 2026 review may be imminent."
   },
   "OMN": {
    "ratings": {
@@ -1728,8 +1728,8 @@
    "project_spread_pct": 1.4,
    "project_spread_basis": "Reported SOFR + 1.4% on the 2023 16-year project loan from Bank of China, Bank Muscat and Standard Chartered to Sembcorp Jinko Shine for the 500 MW Manah II solar IPP (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/108744",
-   "checked": "2026-11-11",
-   "note": "Moody's and Fitch dates are the upgrades; any 2026 affirmations not found. S&P date inferred ('Friday', article 26 Sep). | Tax from PwC quick chart Eurobond: Eurobond quote is >2 months old (26 Aug 2026) and is a generic 10Y yield; source table does not name the bond or state USD explicitly (report text refers to the USD sovereign market). No ~10Y Oman maturity in the Markaz table (2031 5.01%, 2051 6.07% on 14 Jul 2026)."
+   "checked": "2026-11-14",
+   "note": "Re-verified 14 Nov 2026: Moody's (10 Jul 2025) and Fitch (8 Dec 2025) dates are the upgrades to investment grade, confirmed on fxempire; no 2026 Moody's/Fitch sovereign affirmation found. S&P affirmed BBB-/stable 25 Sep 2026 (Oman Observer, The National). No action found 3-14 Nov 2026. | Tax: PwC (reviewed 7 Jul 2026) 15%; 3% for qualifying SMEs | Eurobond: quote is >2 months old (26 Aug 2026) and is a generic 10Y yield, re-read in source; table does not name the bond (report text refers to the USD sovereign market). ADCB lists a newer GCC weekly (6 Nov 2026) but its PDF could not be retrieved; MUFG dailies 6-9 Nov 2026 report Oman bonds underperforming (spread moves only, no yield level). No ~10Y Oman maturity in the Markaz table (2031 5.01%, 2051 6.07% on 14 Jul 2026). | Project spread: AidData page not reachable this run, value left as stored."
   },
   "PAK": {
    "ratings": {
@@ -1856,14 +1856,14 @@
     "moodys": {
      "rating": "Aa2",
      "outlook": "stable",
-     "as_of": null,
-     "source_url": "https://tradingeconomics.com/qatar/rating"
+     "as_of": "2026-05-22",
+     "source_url": "https://www.cnbcarabia.com/152616/2026/23/05/وكالة-موديز-تثبت-تصنيف-قطر-الائتماني-عند-درجة-Aa2-مع-نظرة-مستقبلية-مستقرة"
     },
     "sp": {
      "rating": "AA",
      "outlook": "stable",
-     "as_of": "2026-05-03",
-     "source_url": "https://www.arabnews.pk/node/2642161"
+     "as_of": "2026-11-04",
+     "source_url": "https://www.tradingview.com/news/reuters.com,2026-11-04:newsml_ZawPxjfj:0-zawya-s-p-affirms-qatar-s-aa-a-1-credit-rating-maintains-stable-outlook/"
     },
     "fitch": {
      "rating": "AA",
@@ -1883,8 +1883,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's affirmed 'earlier in 2026', date not found (as_of null, aggregator source). S&P date = press report date. Fitch removed Rating Watch Negative, outlook negative; date inferred ('Friday'). | Tax from PwC quick chart (minimum 35% for petrochemical/petroleum companies/operations) Eurobond: Eurobond quote is >2 months old (26 Aug 2026) and is a generic 10Y yield; source table does not name the bond or state USD explicitly (report text refers to the USD sovereign market). Cross-check: Markaz daily 14 Jul 2026 showed Qatar 2034 at 4.68%. Qatar priced a new 10Y USD bond on 21 Sep 2026 at T+65bp (yield not published in sources seen). | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Re-verified 14 Nov 2026: Moody's affirmed Aa2/stable 22 May 2026 (CNBC Arabia). S&P affirmed AA/A-1+ stable - Zawya/Reuters headline dated 4 Nov 2026 seen in search results (page itself not fetchable; date = news date, action day not confirmed). Fitch removed Rating Watch Negative 4 Sep 2026, outlook negative; date inferred ('Friday'). | Tax: PwC (reviewed 17 Sep 2026) flat 10%; minimum 35% for petrochemical/petroleum companies/operations | Eurobond: quote is >2 months old (26 Aug 2026) and is a generic 10Y yield, re-read in source; table does not name the bond (report text refers to the USD sovereign market). ADCB lists a newer GCC weekly (6 Nov 2026) but its PDF could not be retrieved. Cross-check: Markaz daily 14 Jul 2026 showed Qatar 2034 at 4.68%. Qatar priced a new 10Y USD bond on 21 Sep 2026 at T+65bp (yield not published in sources seen). | no documented project-loan margin found (not re-searched this run)"
   },
   "ROU": {
    "ratings": {
@@ -1910,16 +1910,16 @@
    "corporate_tax_pct": 16,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 7.3082,
+    "yield_pct": 7.1617,
     "instrument": "Romania 7.5% USD notes due 10 Feb 2037 (XS2999564581)",
-    "as_of": "2026-10-07",
+    "as_of": "2026-11-13",
     "source_url": "https://www.finanzen.net/anleihen/a4d6t6-rumaenien-anleihe"
    },
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Fitch date inferred as Friday 31 Jul 2026 from an article dated 1 Aug. Tax from PwC quick chart Eurobond: Eurobond quote dated 2026-10-07 (undated finanzen.net list showed 7.09%). | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Fitch date inferred as Friday 31 Jul 2026 from an article dated 1 Aug. Tax from PwC quick chart | no documented project-loan margin found"
   },
   "RWA": {
    "ratings": {
@@ -1953,8 +1953,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's as_of is press-report date (action 'last week', mid-Sep 2025); S&P as_of is ministry announcement date (action the week before); Fitch as_of is ministry news date of the Sep 2026 reaffirmation (outlook moved to stable 13 Mar 2026). Only USD bond is the 2031 (about 5y left); yield from Frankfurt retail quote. | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Moody's as_of is press-report date (action 'last week', mid-Sep 2025); S&P as_of is ministry announcement date (action the week before); Fitch as_of is ministry news date of the Sep 2026 reaffirmation (outlook moved to stable 13 Mar 2026). No Nov 2026 action found. Only USD bond is the 2031 (about 5y left); yield from Frankfurt retail quote, no quote newer than 11 Nov 2026 on re-check 14 Nov. | no documented project-loan margin found"
   },
   "SAU": {
    "ratings": {
@@ -2011,8 +2011,8 @@
     "moodys": {
      "rating": "Ca",
      "outlook": "stable",
-     "as_of": "2026-11-02",
-     "source_url": "https://dabafinance.com/en/news/senegal-moody-s-downgrades-sovereign-rating-to-ca-2026-11-01"
+     "as_of": "2026-10-29",
+     "source_url": "https://www.ecofinagency.com/news-finances/3010-60297-senegals-foreign-bondholders-face-35-to-65-losses-moodys-warns"
     },
     "sp": {
      "rating": "CC",
@@ -2034,7 +2034,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "debt restructuring under way, default expected by agencies; Moody's outlook 'stable' as reported by one secondary source (unclear whether it covers the FC rating); USD eurobonds (6.25% 2033, 6.75% 2048) trade distressed - 2048 bid 51.47c on 2026-09-03 ; not rated by Fitch; Eurobond: Eurobond yield 'about 20.72%' is an indicative Stuttgart quote (no trades that day) reported by Ecofin 2026-11-10; distressed, price ~51 (africaneurobonds.com close 10 Nov: 50.75/51.875, no yield shown). | no documented project-loan margin found"
+   "note": "debt restructuring under way, default expected by agencies; Moody's cut FC issuer rating Caa2 to Ca on 2026-10-29 with outlook moved negative to stable (Ecofin, Rio Times; Daba dated it 2 Nov), LC rating kept at Caa2; not rated by Fitch; Eurobond: yield 'about 20.72%' is an indicative Stuttgart quote reported by Ecofin 2026-11-10 - no fresher yield found; distressed, africaneurobonds.com close 13 Nov 2026: 49.25/50.375 (no yield shown). | no documented project-loan margin found"
   },
   "SLE": {
    "ratings": {
@@ -2131,8 +2131,8 @@
     "moodys": {
      "rating": "B2",
      "outlook": "stable",
-     "as_of": null,
-     "source_url": "https://app.researchpool.com/provider/moodys-investors-service/moodys-ratings-upgrades-eswatinis-ratings-to-b2-changes-outlook-to-sta-sDkj7v6DT4"
+     "as_of": "2024-11-25",
+     "source_url": "https://fxempire.com/credit-ratings/swaziland"
     },
     "sp": null,
     "fitch": null
@@ -2143,8 +2143,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "Moody's only; date of upgrade to B2 not found; no traded USD sovereign eurobond known (not re-verified this run); | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "Moody's only (S&P, Fitch not rated per fxempire); upgrade B3->B2 stable dated 2024-11-25 (fxempire aggregator; Moody's release on researchpool undated); tax: PwC quick chart 27.5%, 25% for year-ends commencing after 1 July 2024; no traded USD sovereign eurobond known; | no documented project-loan margin found"
   },
   "SYC": {
    "ratings": {
@@ -2187,8 +2187,8 @@
     "sp": {
      "rating": "B-",
      "outlook": "stable",
-     "as_of": "2026-10-08",
-     "source_url": "https://ecomatin.net/tchad-fitch-et-sp-confirment-la-note-b-avec-une-perspective-stable"
+     "as_of": "2026-09-11",
+     "source_url": "https://www.financialafrik.com/2026/09/14/tchad-sp-confirme-la-note-b-b-avec-lor-en-appui-du-petrole/"
     },
     "fitch": {
      "rating": "B-",
@@ -2203,8 +2203,8 @@
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "S&P and Fitch affirmations both reported as 8 Oct 2026 by one press source - per-agency dates not confirmed; PwC Chad page last reviewed Aug 2024 so the 35% rate may be dated; no USD sovereign eurobond known; | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "S&P affirmed B-/B stable on 2026-09-11 (Financial Afrik); Fitch affirmation reported as 8 Oct 2026 by EcoMatin, which gives that one date for both agencies; not rated by Moody's (aggregator); tax 35%: PwC page last reviewed Aug 2024, taxatlas.io and tradingeconomics 2026 agree; no USD sovereign eurobond known; | no documented project-loan margin found (not re-searched this run)"
   },
   "TGO": {
    "ratings": {
@@ -2229,7 +2229,7 @@
    "project_spread_basis": null,
    "project_spread_source_url": null,
    "checked": "2026-11-11",
-   "note": "ratings from aggregators (fxempire, tradingeconomics); no USD sovereign eurobond identified; corporate tax null: not on PwC quick chart and no other source reachable this run; Tax: Lloyds Bank trade portal (updated Nov 2026) 'Company Tax 27%'; Damodaran Jan 2026 table agrees; PwC Togo 2026 guide PDF not read | no documented project-loan margin found"
+   "note": "ratings from aggregators: Moody's B3 positive 2026-09-25 (fxempire, anansihq); S&P B+ with outlook positive dated 2026-10-16 on tradingeconomics and fxempire, but anansihq (18 Oct 2026) still shows stable and no press report was found - S&P outlook not confirmed; upgrade to B+ was 2025-04-18; no USD sovereign eurobond identified; Tax: Lloyds Bank trade portal 'Company Tax 27%'; Damodaran Jan 2026 table and taxratesbycountry.com 2026 agree; not on PwC quick chart | no documented project-loan margin found"
   },
   "TJK": {
    "ratings": {
@@ -2294,17 +2294,17 @@
      "rating": "B-",
      "outlook": "stable",
      "as_of": "2026-09-08",
-     "source_url": "https://www.tuniscope.com/article/439455/business/economie/fitch-ratings-40021754566"
+     "source_url": "https://www.lapresse.tn/2026/09/08/fitch-maintient-la-note-de-la-tunisie-a-b-avec-une-perspective-stable/"
     }
    },
    "corporate_tax_pct": 20,
-   "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
+   "tax_source_url": "https://taxsummaries.pwc.com/tunisia/corporate/taxes-on-corporate-income",
    "eurobond": null,
    "project_spread_pct": null,
    "project_spread_basis": null,
    "project_spread_source_url": null,
-   "checked": "2026-11-11",
-   "note": "not rated by S&P; Moody's (periodic review, end July 2026) and Fitch (early Sept 2026) dates are press-article dates, exact action day not stated; Eurobond null: only USD bond found is BCT 8.25% 2027 (under 1 year, 7.067% on 2026-10-08), not a 10-year proxy | no documented project-loan margin found"
+   "checked": "2026-11-14",
+   "note": "not rated by S&P; Fitch affirmation dated 2026-09-08 (La Presse); Moody's Caa1 stable is a periodic review: press date 2026-07-28, committee reportedly 2026-07-16 (africanmanager), not a rating action; tax 20% general rate (PwC, reviewed 2026-06-29; +4% contribution for banks/insurers/telecoms); Eurobond null: only USD bond found is BCT 8.25% 2027 (under 1 year, 7.067% on 2026-10-08), not a 10-year proxy | no documented project-loan margin found"
   },
   "TUR": {
    "ratings": {
@@ -2509,7 +2509,7 @@
    "project_spread_basis": "3-month LIBOR + 257 bps on China Development Bank's 2015 USD 1.5bn 15-year buyer's credit to Transnet for locomotive acquisition, margin as reported in 2014 before final contract (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/58599/",
    "checked": "2026-11-11",
-   "note": "S&P affirmed BB/positive in late May 2026 (exact date not found; as_of is the Nov 2025 upgrade); Moody's and S&P reviews due 2026-11-27, Fitch 2026-12-11; Eurobond: Eurobond yield = mid of indicative bid/ask yields 6.58/6.52 (africaneurobonds.com close, aggregator)."
+   "note": "S&P affirmed BB/positive in late May 2026 (press 2026-05-30, Treasury response dated 2026-05-29; as_of is the Nov 2025 upgrade); Moody's and S&P reviews due 2026-11-27, Fitch 2026-12-11; Eurobond: Eurobond yield = mid of indicative bid/ask yields 6.58/6.52 (africaneurobonds.com close, aggregator). Bond page still showed the 10 Nov 2026 close on 2026-11-14 (prices page shows a 12 Nov close without yields), yield kept."
   },
   "ZMB": {
    "ratings": {
@@ -2517,7 +2517,7 @@
      "rating": "Caa1",
      "outlook": "positive",
      "as_of": "2026-10-30",
-     "source_url": "https://ground.news/article/moodys-upgrades-zambias-credit-rating"
+     "source_url": "https://zambianobserver.com/?p=747987"
     },
     "sp": {
      "rating": "CCC+",
@@ -2535,16 +2535,16 @@
    "corporate_tax_pct": 30,
    "tax_source_url": "https://taxsummaries.pwc.com/quick-charts/corporate-income-tax-cit-rates",
    "eurobond": {
-    "yield_pct": 6.955,
+    "yield_pct": 6.985,
     "instrument": "Zambia 5.75% step-up USD due 30 Jun 2033 (restructured Bond A, XS2837240261)",
-    "as_of": "2026-11-10",
+    "as_of": "2026-11-13",
     "source_url": "https://www.africaneurobonds.com/learn/zambia/5-75-percent-2033/"
    },
    "project_spread_pct": 5.0,
    "project_spread_basis": "LIBOR + 500 bps on the July 2015 USD 365m 10-year syndicated tranche (Bank of China, ICBC, Standard Chartered) to Maamba Collieries for the 300 MW Maamba power plant phase I (AidData record).",
    "project_spread_source_url": "https://china.aiddata.org/projects/56854",
-   "checked": "2026-11-11",
-   "note": "Moody's upgrade from Caa2 on 2026-10-30 seen via one aggregator only; Eurobond: Eurobond yield = mid of indicative bid/ask yields 7.08/6.83 (africaneurobonds.com close, aggregator). Restructured amortising bond; only priced Zambia line."
+   "checked": "2026-11-14",
+   "note": "Moody's upgrade from Caa2 on 2026-10-30 confirmed by Zambian press (2026-11-02) and ground.news; S&P and Fitch dates from fxempire aggregator, no 2026 action by either found; Eurobond: Eurobond yield = mid of indicative bid/ask yields 7.09/6.88 (africaneurobonds.com close, aggregator). Restructured amortising bond; only priced Zambia line."
   },
   "ZWE": {
    "ratings": {
@@ -2565,15 +2565,33 @@
  "changes": [
   {
    "iso3": "SEN",
-   "what": "Moody's downgraded Senegal to Ca from Caa2",
-   "date": "2026-11-02",
-   "source_url": "https://dabafinance.com/en/news/senegal-moody-s-downgrades-sovereign-rating-to-ca-2026-11-01"
+   "what": "Moody's downgraded Senegal to Ca from Caa2, outlook stable",
+   "date": "2026-10-29",
+   "source_url": "https://www.ecofinagency.com/news-finances/3010-60297-senegals-foreign-bondholders-face-35-to-65-losses-moodys-warns"
   },
   {
    "iso3": "DOM",
-   "what": "Fitch upgraded to BB from BB-, outlook stable (two press sources; exact action date not stated, on or shortly before 2026-11-04)",
-   "date": "2026-11-04",
-   "source_url": "https://inmobiliario.do/en/fitch-ratings-raises-the-dominican-republics-credit-rating-to-bb-with-a-stable-outlook/"
+   "what": "Fitch upgraded to BB from BB-, outlook stable (date is that of the first press reports)",
+   "date": "2026-11-03",
+   "source_url": "https://ensegundos.do/2026/11/03/fitch-ratings-eleva-la-calificacion-crediticia-de-republica-dominicana-a-bb-con-perspectiva-estable/"
+  },
+  {
+   "iso3": "BFA",
+   "what": "S&P upgraded CCC+ to B-, outlook stable",
+   "date": "2026-11-06",
+   "source_url": "https://www.financialafrik.com/en/?p=495044"
+  },
+  {
+   "iso3": "GIN",
+   "what": "correction: standard corporate tax rate 30 -> 25 (30 is the mining-sector rate; general rate 25% per Code General des Impots Art. 229)",
+   "date": "2026-11-14",
+   "source_url": "https://www.mbudget.gov.gn/wp-content/uploads/Code-General-des-Impots.pdf"
+  },
+  {
+   "iso3": "MOZ",
+   "what": "correction: S&P lowered long-term foreign-currency rating to CCC from CCC+, outlook negative (action of 2026-09-25 missed by previous file)",
+   "date": "2026-09-25",
+   "source_url": "https://www.theasianbanker.com/updates-and-articles/mozambique-downgraded-to-ccc-as-debt-restructuring-risk-rises"
   }
  ]
 }

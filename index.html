@@ -13,7 +13,7 @@
 </head>
 <body>
 <header class="top">
-  <div><h1>Harbourline WACC</h1><div class="sub">Sourced cost-of-capital estimates for infrastructure projects</div></div>
+  <div><h1>Harbourline WACC</h1><div class="sub">Sourced cost-of-capital estimates for infrastructure, energy and resource projects</div></div>
   <div class="sp"></div>
   <span id="who" class="sub"></span>
   <a id="adminLink" class="btn hidden" href="admin.html">Admin</a>
@@ -36,6 +36,11 @@
           <option value="logistics">Logistics</option>
           <option value="zones">Free zones &amp; economic zones</option>
           <option value="marine">Marine services</option>
+          <option value="efficiency">Energy efficiency</option>
+          <option value="energy">Energy production</option>
+          <option value="oilgas">Oil &amp; gas services</option>
+          <option value="mining">Mining</option>
+          <option value="agrifood">Agrifood</option>
         </select>
         <label>Country</label>
         <select id="fCountry"></select>
@@ -175,7 +180,7 @@
   }
 
   // ---------- result rendering
-  const SECTOR_LABELS = { ports: "Ports & terminals", logistics: "Logistics", zones: "Free zones & economic zones", marine: "Marine services", rail: "Rail & inland corridors" };
+  const SECTOR_LABELS = { ports: "Ports & terminals", logistics: "Logistics", zones: "Free zones & economic zones", marine: "Marine services", efficiency: "Energy efficiency", energy: "Energy production", oilgas: "Oil & gas services", mining: "Mining", agrifood: "Agrifood", rail: "Rail & inland corridors" };
   const P = (x, d = 2) => (typeof x === "number" ? x.toFixed(d) + "%" : "–");
   const refSup = (n) => (n ? h("sup", { class: "ref" }, h("a", { href: "#ref" + n }, "[" + n + "]")) : null);
   function render(run) {
